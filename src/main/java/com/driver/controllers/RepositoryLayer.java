@@ -7,7 +7,7 @@ import com.driver.model.Passenger;
 
 import java.util.*;
 
-public class Repositorylayer {
+public class RepositoryLayer {
     HashMap<String, Airport> airportMap=new HashMap<>();
     HashMap<City,String> cityAirportidMap=new HashMap<>();
     HashMap<Integer, Flight> flightMap=new HashMap<>();

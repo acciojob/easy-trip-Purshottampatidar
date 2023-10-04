@@ -11,7 +11,7 @@ import java.util.Date;
 
 @RestController
 public class AirportController {
-    Servicelayer serviceObj=new Servicelayer();
+    ServiceLayer serviceObj=new ServiceLayer();
     @PostMapping("/add_airport")
     public String addAirport(@RequestBody Airport airport){
 

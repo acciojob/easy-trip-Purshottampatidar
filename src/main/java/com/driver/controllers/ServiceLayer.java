@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class Servicelayer {
-    Repositorylayer repoObj=new Repositorylayer();
+public class ServiceLayer {
+    RepositoryLayer repoObj=new RepositoryLayer();
 
     public String addAirport(Airport airport){
         return repoObj.addAirport(airport);
