@@ -1,4 +1,4 @@
-package com.driver.controllers;
+package com.driver.repositories;
 
 import com.driver.model.Airport;
 import com.driver.model.Flight;

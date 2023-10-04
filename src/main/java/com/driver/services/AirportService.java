@@ -1,16 +1,16 @@
-package com.driver.controllers;
+package com.driver.services;
 
 import com.driver.model.Airport;
 import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import org.springframework.stereotype.Service;
+import com.driver.repositories.AirportRepository;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 @Service
 public class AirportService {
     private AirportRepository airportRepositoryObj = new AirportRepository();
