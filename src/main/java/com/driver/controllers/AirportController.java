@@ -6,118 +6,129 @@ import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import org.springframework.web.bind.annotation.*;
-import com.driver.services.AirportService;
 
 import java.util.Date;
 
 @RestController
 public class AirportController {
-    private AirportService airportServiceObj = new AirportService();
-
+    Servicelayer serviceObj=new Servicelayer();
     @PostMapping("/add_airport")
-    public String addAirport(@RequestBody Airport airport) {
+    public String addAirport(@RequestBody Airport airport){
+
         //Simply add airport details to your database
         //Return a String message "SUCCESS"
-        airportServiceObj.addAirport(airport);
+        return serviceObj.addAirport(airport);
 
-        return "SUCCESS";
+
     }
 
     @GetMapping("/get-largest-aiport")
-    public String getLargestAirportName() {
-        //Largest airport is in terms of terminals. 3 terminal airport is larger than 2 terminal airport
-        //In case of a tie return the Lexicographically smallest airportName
+    public String getLargestAirportName(){
 
-        return airportServiceObj.getLargestAirportName();
+        //Largest airport is in terms of terminals. 3 terminal airport is larger than 2 terminal airport
+        //Incase of a tie return the Lexicographically smallest airportName
+        String largestAirport= serviceObj.getLargestAirportName();
+        return largestAirport;
     }
 
     @GetMapping("/get-shortest-time-travel-between-cities")
-    public double getShortestDurationOfPossibleBetweenTwoCities(@RequestParam("fromCity") City fromCity, @RequestParam("toCity") City toCity) {
+    public double getShortestDurationOfPossibleBetweenTwoCities(@RequestParam("fromCity") City fromCity, @RequestParam("toCity")City toCity){
+
         //Find the duration by finding the shortest flight that connects these 2 cities directly
         //If there is no direct flight between 2 cities return -1.
+        return serviceObj.getShortestDurationOfPossibleBetweenTwoCities(fromCity,toCity);
 
-        return airportServiceObj.getShortestDurationOfPossibleBetweenTwoCities(fromCity, toCity);
     }
 
     @GetMapping("/get-number-of-people-on-airport-on/{date}")
-    public int getNumberOfPeopleOn(@PathVariable("date") Date date, @RequestParam("airportName") String airportName) {
+    public int getNumberOfPeopleOn(@PathVariable("date") Date date,@RequestParam("airportName")String airportName){
+
         //Calculate the total number of people who have flights on that day on a particular airport
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
-
-        return airportServiceObj.getNumberOfPeopleOn(date, airportName);
+        return serviceObj.getNumberOfPeopleOn(date,airportName);
     }
 
     @GetMapping("/calculate-fare")
-    public int calculateFlightFare(@RequestParam("flightId") Integer flightId) {
+    public int calculateFlightFare(@RequestParam("flightId")Integer flightId){
+
         //Calculation of flight prices is a function of number of people who have booked the flight already.
         //Price for any flight will be : 3000 + noOfPeopleWhoHaveAlreadyBooked*50
         //Suppose if 2 people have booked the flight already : the price of flight for the third person will be 3000 + 2*50 = 3100
         //This will not include the current person who is trying to book, he might also be just checking price
-
-        return airportServiceObj.calculateFlightFare(flightId);
+        int ans=serviceObj.calculateFlightFare(flightId);
+        return ans;
 
     }
 
+
     @PostMapping("/book-a-ticket")
-    public String bookATicket(@RequestParam("flightId") Integer flightId, @RequestParam("passengerId") Integer passengerId) {
+    public String bookATicket(@RequestParam("flightId")Integer flightId,@RequestParam("passengerId")Integer passengerId){
+
         //If the numberOfPassengers who have booked the flight is greater than : maxCapacity, in that case :
         //return a String "FAILURE"
         //Also if the passenger has already booked a flight then also return "FAILURE".
         //else if you are able to book a ticket then return "SUCCESS"
+        return serviceObj.bookATicket(flightId,passengerId);
 
-        return airportServiceObj.bookATicket(flightId, passengerId);
+
     }
 
     @PutMapping("/cancel-a-ticket")
-    public String cancelATicket(@RequestParam("flightId") Integer flightId, @RequestParam("passengerId") Integer passengerId) {
+    public String cancelATicket(@RequestParam("flightId")Integer flightId,@RequestParam("passengerId")Integer passengerId){
+
         //If the passenger has not booked a ticket for that flight or the flightId is invalid or in any other failure case
         // then return a "FAILURE" message
         // Otherwise return a "SUCCESS" message
         // and also cancel the ticket that passenger had booked earlier on the given flightId
+        return serviceObj.cancelATicket(flightId,passengerId);
 
-        return airportServiceObj.cancelATicket(flightId, passengerId);
+
     }
 
-    @GetMapping("/get-count-of-bookings-done-by-a-passenger/{passengerId}")
-    public int countOfBookingsDoneByPassengerAllCombined(@PathVariable("passengerId") Integer passengerId) {
-        //Tell the count of flight bookings done by a passenger: This will tell the total count of flight bookings done by a passenger :
 
-        return airportServiceObj.countOfBookingsDoneByPassengerAllCombined(passengerId);
+    @GetMapping("/get-count-of-bookings-done-by-a-passenger/{passengerId}")
+    public int countOfBookingsDoneByPassengerAllCombined(@PathVariable("passengerId")Integer passengerId){
+
+        //Tell the count of flight bookings done by a passenger: This will tell the total count of flight bookings done by a passenger :
+        return serviceObj.countOfBookingsDoneByPassengerAllCombined(passengerId);
     }
 
     @PostMapping("/add-flight")
-    public String addFlight(@RequestBody Flight flight) {
-        //Return a "SUCCESS" message string after adding a flight.
+    public String addFlight(@RequestBody Flight flight){
 
-        return airportServiceObj.addFlight(flight);
+        //Return a "SUCCESS" message string after adding a flight.
+        return serviceObj.addFlight(flight);
     }
+
 
     @GetMapping("/get-aiportName-from-flight-takeoff/{flightId}")
-    public String getAirportNameFromFlightId(@PathVariable("flightId") Integer flightId) {
-        //We need to get the starting airportName from where the flight will be taking off (Hint think of City variable if that can be of some use)
-        //return null in case the flightId is invalid or you are not able to find the airportName
+    public String getAirportNameFromFlightId(@PathVariable("flightId")Integer flightId){
 
-        return airportServiceObj.getAirportNameFromFlightId(flightId);
+        //We need to get the starting airportName from where the flight will be taking off (Hint think of City variable if that can be of some use)
+        //return null incase the flightId is invalid or you are not able to find the airportName
+
+        return  serviceObj.getAirportNameFromFlightId(flightId);
     }
 
+
     @GetMapping("/calculate-revenue-collected/{flightId}")
-    public int calculateRevenueOfAFlight(@PathVariable("flightId") Integer flightId) {
+    public int calculateRevenueOfAFlight(@PathVariable("flightId")Integer flightId){
+
         //Calculate the total revenue that a flight could have
         //That is of all the passengers that have booked a flight till now and then calculate the revenue
         //Revenue will also decrease if some passenger cancels the flight
-
-        return airportServiceObj.calculateRevenueOfAFlight(flightId);
+        return serviceObj.calculateRevenueOfAFlight(flightId);
     }
 
+
     @PostMapping("/add-passenger")
-    public String addPassenger(@RequestBody Passenger passenger) {
+    public String addPassenger(@RequestBody Passenger passenger){
+
         //Add a passenger to the database
         //And return a "SUCCESS" message if the passenger has been added successfully.
 
-        return airportServiceObj.addPassenger(passenger);
+        return serviceObj.addPassenger(passenger);
     }
-
-
 
 
 }
