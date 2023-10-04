@@ -16,11 +16,13 @@ import java.util.Objects;
 
 @RestController
 public class AirportController {
+    Service service=new Service();
     @PostMapping("/add_airport")
     public String addAirport(@RequestBody Airport airport){
 
         //Simply add airport details to your database
         //Return a String message "SUCCESS"
+        service.addAirport(airport);
 
         return "SUCCESS";
     }
@@ -30,8 +32,9 @@ public class AirportController {
 
         //Largest airport is in terms of terminals. 3 terminal airport is larger than 2 terminal airport
         //Incase of a tie return the Lexicographically smallest airportName
+       String res= service.getLargest();
 
-       return null;
+       return res ;
     }
 
     @GetMapping("/get-shortest-time-travel-between-cities")
@@ -97,9 +100,9 @@ public class AirportController {
 
     @PostMapping("/add-flight")
     public String addFlight(@RequestBody Flight flight){
-
+        service.addFlightToDb(flight);
         //Return a "SUCCESS" message string after adding a flight.
-       return null;
+       return "SUCCESS";
     }
 
 
@@ -131,7 +134,8 @@ public class AirportController {
         //Add a passenger to the database
         //And return a "SUCCESS" message if the passenger has been added successfully.
 
-       return null;
+        service.addPassengerToDb(passenger);
+        return "SUCCESS";
     }
 
 
